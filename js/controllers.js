@@ -45,7 +45,7 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
     $scope.showConfirm = function(ev) {
         var confirm = $mdDialog.confirm()
             .title('This is your event\'s ID. You MUST write it down so you can have access to your event!')
-            .textContent($scope.response.data.uuid)
+            .textContent($scope.invitation.data.uuid)
             .targetEvent(ev)
             .ok('Got it');
         $mdDialog.show(confirm).then(function() {
