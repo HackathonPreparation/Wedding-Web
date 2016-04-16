@@ -12,7 +12,6 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
             $http({
                 method : 'POST',
                 url : '/visitors', //not working yet
-                crossDomain: true,
                 headers : {
                     'Content-Type' : 'application/json'
                 },
@@ -40,16 +39,15 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
             $scope.showConfirm();
         }, function (error) {
             console.log(error);
-            $scope.showConfirm();
+            //$scope.showConfirm();
         });
     };
     $scope.showConfirm = function(ev) {
-        // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
             .title('This is your event\'s ID. You MUST write it down so you can have access to your event!')
-            //.textContent($scope.response.uuid)
+            .textContent($scope.response.data.uuid)
             .targetEvent(ev)
-            .ok('Ok! ');
+            .ok('Got it');
         $mdDialog.show(confirm).then(function() {
             $window.location = '#/invite';
         });
