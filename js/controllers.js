@@ -24,8 +24,7 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
 organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$timeout', function ($scope, $http) {
     $scope.event = {};
     $scope.invitation ={};
-    $scope.eventButton = function() {
-        console.log($scope.event);
+    //$scope.eventButton = function() {
         $scope.createEvent = function () {
             $http({
                 method : 'POST',
@@ -41,7 +40,7 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$timeout
                 console.log(error);
             });
         };
-    };
+    //};
 }]);
 
 organizerControllers.controller('InitialEvent', ['$scope', '$window', function ($scope, $window) {
