@@ -2,7 +2,7 @@
  * Created by Orestis on 16/4/2016.
  */
 
-var organizerControllers = angular.module('organizerControllers', []);
+var organizerControllers = angular.module('organizerControllers', ['ngMaterial']);
 
 organizerControllers.controller('InvitationController', [ '$scope', '$http', function ($scope, $http) {
     $scope.invited = {};
@@ -12,6 +12,7 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
             $http({
                 method : 'POST',
                 url : '/visitors', //not working yet
+                crossDomain: true,
                 headers : {
                     'Content-Type' : 'application/json'
                 },
@@ -21,26 +22,38 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
     }    
 }]);
 
-organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$timeout', function ($scope, $http) {
+organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialog', '$window', function ($scope, $http, $mdDialog, $window) {
     $scope.event = {};
     $scope.invitation ={};
-    //$scope.eventButton = function() {
-        $scope.createEvent = function () {
-            $http({
-                method : 'POST',
-                url : 'http://83.212.105.54:8080/event/new', //not working yet
-                headers : {
-                    'Content-Type' : 'application/json'
-                },
-                data : $scope.event
-            }).then(function (response) {
-                $scope.invitation = response;
-                console.log(response);
-            }, function (error) {
-                console.log(error);
-            });
-        };
-    //};
+    $scope.createEvent = function () {
+        console.log($scope.event);
+        $http({
+            method : 'POST',
+            url : 'http://83.212.105.54:8080/event/new',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            data : $scope.event
+        }).then(function (response) {
+            $scope.invitation = response;
+            console.log(response);
+            $scope.showConfirm();
+        }, function (error) {
+            console.log(error);
+            $scope.showConfirm();
+        });
+    };
+    $scope.showConfirm = function(ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('This is your event\'s ID. You MUST write it down so you can have access to your event!')
+            //.textContent($scope.response.uuid)
+            .targetEvent(ev)
+            .ok('Ok! ');
+        $mdDialog.show(confirm).then(function() {
+            $window.location = '#/invite';
+        });
+    };
 }]);
 
 organizerControllers.controller('InitialEvent', ['$scope', '$window', function ($scope, $window) {
