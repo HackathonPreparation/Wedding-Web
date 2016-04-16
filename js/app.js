@@ -7,6 +7,13 @@ var weddingApp = angular.module('weddingApp', [
         'organizerControllers'
     ]);
 
+weddingApp.factory('Core', function(){
+    return {
+        guestList : []
+        }
+    }
+);
+
 weddingApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
         when('/initialPage', {

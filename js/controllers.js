@@ -4,10 +4,11 @@
 
 var organizerControllers = angular.module('organizerControllers', ['ngMaterial']);
 
-organizerControllers.controller('InvitationController', [ '$scope', '$http', function ($scope, $http) {
+organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Core', function ($scope, $http, Core) {
     $scope.invited = {};
-    $scope.inviteButton = function() {
-        console.log($scope.invited);
+    $scope.guests = Core.guestList;
+    $scope.inviteButton = function(person) {
+        $scope.guests.push(person);
         $scope.createInvites = function () {
             $http({
                 method : 'POST',
@@ -16,12 +17,18 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
                     'Content-Type' : 'application/json'
                 },
                 data : $scope.invited
-            })
+            }).then(function (response) {
+                $scope.guests.push(person);
+                console.log(response);
+            }, function(error) {
+                $scope.guests.push(person);
+                console.log(error);
+            });
         };
     }    
 }]);
 
-organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialog', '$window', function ($scope, $http, $mdDialog, $window) {
+organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialog', '$window', 'Core', function ($scope, $http, $mdDialog, $window, Core) {
     $scope.event = {};
     $scope.invitation ={};
     $scope.createEvent = function () {
@@ -39,7 +46,6 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
             $scope.showConfirm();
         }, function (error) {
             console.log(error);
-            //$scope.showConfirm();
         });
     };
     $scope.showConfirm = function(ev) {
@@ -49,7 +55,19 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
             .targetEvent(ev)
             .ok('Got it');
         $mdDialog.show(confirm).then(function() {
-            $window.location = '#/invite';
+            $http({
+                method : 'GET',
+                url : 'http://83.212.105.54:8080/event/' + $scope.invitation.data.uuid,
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            }).then(function (response) {
+                console.log(response);
+                Core.guestList = response.data;
+                $window.location = '#/invite';
+            }, function (error) {
+                console.log(error);
+            });
         });
     };
 }]);
