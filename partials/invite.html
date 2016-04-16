@@ -3,8 +3,11 @@
         <h1>Invitation Creator</h1>
         <form>
             <label>Give name:</label>
-            <input type="text" ng-model="invited.name" placeholder="Invited Name" autofocus>
-            <button ng-click="inviteButton()">+Add</button>
+            <input type="text" name="invitedName" ng-model="invited.name" placeholder="Invited Name" autofocus>
+            <button ng-click="inviteButton(invited.name)">+Add</button>
         </form>
+        <div ng-repeat="people in guests track by $index">
+            {{people}}
+        </div>
     </div>
 </section>

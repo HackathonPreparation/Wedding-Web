@@ -7,8 +7,19 @@ var weddingApp = angular.module('weddingApp', [
         'organizerControllers'
     ]);
 
+weddingApp.factory('Core', function(){
+    return {
+        guestList : []
+        }
+    }
+);
+
 weddingApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
+        when('/initialPage', {
+        templateUrl: 'partials/initialPage.html',
+        controller: 'InitialEvent'
+    }).
         when('/createWedding', {
         templateUrl: 'partials/createWedding.html',
         controller: 'WeddingCreation'
@@ -18,6 +29,6 @@ weddingApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'InvitationController'
     }).
         otherwise({
-        redirectTo: '/createWedding'
+        redirectTo: '/initialPage'
     });
 }]);
