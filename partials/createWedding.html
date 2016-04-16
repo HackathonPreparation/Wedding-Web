@@ -1,14 +1,14 @@
 <section>
     <div>
-        <form>
-            <form>
-            <h1>Create your marriage here!</h1>
-            <label>Event's Name:</label>
-            <input type="text" name="eventName" ng-model="event.eventName" required></form><br>
-            <label>Invitation text</label>
-            <input type="text" name="inviteText" ng-model="event.inviteText" required><br>
-            <button ng-click="eventButton()">Submit</button>
-        </form>
+
+        <h1>Create your marriage here!</h1>
+        <label>Event's Name:</label>
+        <input type="text" name="name" ng-model="event.name" required><br>
+        <label>Invitation text</label>
+        <input type="text" name="comment" ng-model="event.comment" required><br>
+        <button ng-click="eventButton()">Submit</button>
+
+        {{invitation.uuid}}
         <br><br>
         <a href="#/invite">Invite your friends!</a>
     </div>

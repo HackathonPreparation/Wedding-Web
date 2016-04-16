@@ -21,24 +21,41 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', fun
     }    
 }]);
 
-organizerControllers.controller('WeddingCreation', ['$scope', '$http', function ($scope, $http) {
+organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$timeout', function ($scope, $http) {
     $scope.event = {};
+    $scope.invitation ={};
     $scope.eventButton = function() {
         console.log($scope.event);
         $scope.createEvent = function () {
             $http({
                 method : 'POST',
-                url : 'http://83.212.105.54:8080/event', //not working yet
+                url : 'http://83.212.105.54:8080/event/new', //not working yet
                 headers : {
                     'Content-Type' : 'application/json'
                 },
                 data : $scope.event
-            })
+            }).then(function (response) {
+                $scope.invitation = response;
+                console.log(response);
+            }, function (error) {
+                console.log(error);
+            });
         };
-    }
+    };
+}]);
+
+organizerControllers.controller('InitialEvent', ['$scope', '$window', function ($scope, $window) {
+    $scope.goCreate = function() {
+        console.log($scope.event);
+        $window.location = '#/createWedding';
+    };
+    $scope.goEdit = function() {
+        console.log($scope.event);
+        $window.location = '#/invite';
+    };
 }]);
 
 
-// var invitedControllers = angular.module('invitedControllers');
+// var invitedControllers = angular.module('invitedControllers', []);
 //
-// invitedControllers.controller();
+// invitedControllers.controller('decisionController');
