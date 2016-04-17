@@ -4,12 +4,15 @@
 
 var weddingApp = angular.module('weddingApp', [
         'ngRoute',
+        'invitedControllers',
         'organizerControllers'
     ]);
 
 weddingApp.factory('Core', function(){
     return {
-        guestList : []
+        guestList : [],
+        invitation : {},
+        event : {}
         }
     }
 );
@@ -27,6 +30,14 @@ weddingApp.config(['$routeProvider', function ($routeProvider) {
         when('/invite', {
         templateUrl: 'partials/invite.html',
         controller: 'InvitationController'
+    }).
+        when('/pending/:uuid', {
+        templateUrl: 'partials/pending.html',
+        controller: 'PendingController'
+    }).
+        when('/accepted', {
+        templateUrl: 'partials/accepted.html',
+        controller: 'AcceptedController'
     }).
         otherwise({
         redirectTo: '/initialPage'
