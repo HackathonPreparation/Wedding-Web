@@ -9,7 +9,7 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     $scope.invitation = Core.invitation;
     $scope.guests = Core.guestList;
 
-    $scope.createInvites = function (person) {
+    $scope.createInvites = function () {
         //$scope.guests.push(person);
         $http({
             method : 'POST',
@@ -41,9 +41,8 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     };
     
     $scope.downloadQR = function () {
-
-
         console.log(Core.guestList);
+
       $http({
           method: 'GET',
           url: 'http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + Core.guestList.visitors[Core.guestList.visitors.length-1].uuid
@@ -55,10 +54,11 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     };
 
     $scope.deleteSomeone = function (personToDelete, index) {
+
         $http({
             method: 'DELETE',
-            url: 'http://83.212.105.54:8080/event/delete',
-            data: personToDelete.uuid
+            url: 'http://83.212.105.54:8080/event/delete/' + personToDelete.uuid
+            //data: personToDelete.uuid
         }).then(function (success1) {
             console.log(Core.guestList);
             Core.guestList.splice(index, 1);
@@ -69,10 +69,11 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     };
 
     $scope.deleteEvent =function () {
+
         $http({
             method: 'DELETE',
-            url: 'http://83.212.105.54:8080/event/cancelEvent',
-            data: $scope.invitation.data.uuid
+            url: 'http://83.212.105.54:8080/event/cancelEvent/' + $scope.invitation.data.uuid
+            //data: $scope.invitation.data.uuid
         }).then(function (success2) {
             console.log('UUID deleted' + success2);
             $window.location = '#/initialPage';
@@ -131,10 +132,12 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
 }]);
 
 organizerControllers.controller('InitialEvent', ['$scope', '$window', function ($scope, $window) {
+
     $scope.goCreate = function() {
         console.log($scope.event);
         $window.location = '#/createWedding';
     };
+
     $scope.goEdit = function() {
         console.log($scope.event);
         $window.location = '#/invite';
