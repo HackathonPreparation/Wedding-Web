@@ -165,42 +165,51 @@ organizerControllers.controller('InitialEvent', ['$scope', '$window', '$mdDialog
 }]);
 
 
-var invitedControllers = angular.module('invitedControllers', ['ngMaterial']);
+//var invitedControllers = angular.module('invitedControllers', ['ngMaterial']);
 
-invitedControllers.controller('PendingController', ['$scope', '$window', '$mdDialog', '$http', '$routeParams', function ($scope, $window, $mdDialog, $http, $routeParams) {
-    console.log("hi");
-    $scope.userId = $routeParams.userId;
-    $scope.accepted = function () {
-        $http({
-            method : 'PUT',
-            url : 'http://83.212.105.54:8080/visitor/accept', //not working
-            headers : {
-                'Content-Type' : 'application/json'
-            }/*,
-            data : $scope.event*/
-        }).then(function (response) {
-            console.log(response);
-            $window.location = '#/accepted';
-        }, function (error) {
-            console.log(error);
-        });
-    };
-    
-    $scope.declined = function () {
-        $scope.showAlert = function(ev) {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#popupContainer')))
-                    .clickOutsideToClose(true)
-                    .title('DECLINED')
-                    .textContent('We will miss you!')
-                    .ok('OK')
-                    .targetEvent(ev)
-            );
-        };
-    };
-}]);
+// invitedControllers.controller('PendingController', ['$scope', '$window', '$mdDialog', '$http', '$routeParams', function ($scope, $window, $mdDialog, $http, $routeParams) {
+//     console.log("hi");
+//     $scope.userId = $routeParams.userId;
+//     $scope.accepted = function () {
+//         $http({
+//             method : 'PUT',
+//             url : 'http://83.212.105.54:8080/visitor/', //not working
+//             headers : {
+//                 'Content-Type' : 'application/json'
+//             }/*,
+//             data : $scope.event*/
+//         }).then(function (response) {
+//             console.log(response);
+//             $window.location = '#/accepted';
+//         }, function (error) {
+//             console.log(error);
+//         });
+//     };
+//
+//     $scope.declined = function () {
+//         $scope.showAlert = function(ev) {
+//             $mdDialog.show(
+//                 $mdDialog.alert()
+//                     .parent(angular.element(document.querySelector('#popupContainer')))
+//                     .clickOutsideToClose(true)
+//                     .title('DECLINED')
+//                     .textContent('We will miss you!')
+//                     .ok('OK')
+//                     .targetEvent(ev)
+//             );
+//         };
+//     };
+// }]);
 
-invitedControllers.controller('AcceptedController', ['$scope', function ($scope) {
-        
-}]);
+// invitedControllers.controller('AcceptedController', ['$scope', '$http', 'Core', function ($scope, $http, Core) {
+//      $scope.acceptedInvitation = function () {
+//          $http({
+//              method: 'GET',
+//              url: 'http://83.212.105.54:8080/visitor/' + Core.guestList.uuid
+//          }).then(function (success) {
+//
+//          }, function (error) {
+//              console.log(error);
+//          });
+//      };
+//}]);
