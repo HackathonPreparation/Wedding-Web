@@ -8,7 +8,7 @@
         </form>
         <div ng-repeat="people in guests track by $index">
             <button ng-click="deleteSomeone(people, $index)">Delete guest</button>
-            <button ng-click="downloadQR()">Download QR</button>
+            <button ng-click="downloadQR(people)">Download QR</button>
             {{people.name}}
         </div>
         <div>

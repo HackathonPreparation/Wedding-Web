@@ -40,25 +40,24 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
         });
     };
     
-    $scope.downloadQR = function () {
-        console.log(Core.guestList);
-
-      $http({
-          method: 'GET',
-          url: 'http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + Core.guestList.visitors[Core.guestList.visitors.length-1].uuid
-      }).then(function (response3) {
-          console.log('downloaded' + response3);
-      }, function (error3) {
-              console.log("something went wrong" + error3);
-      });
+    $scope.downloadQR = function (person) {
+        window.open('http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid, 'Download');
+      // $http({
+      //     method: 'GET',
+      //     url: 'http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid
+      // }).then(function (response3) {
+      //     $window.location('http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid)
+      //     //console.log('downloaded' + response3);
+      // }, function (error3) {
+      //         //console.log("something went wrong" + error3);
+      // });
     };
 
     $scope.deleteSomeone = function (personToDelete, index) {
 
         $http({
-            method: 'DELETE',
+            method: 'GET',
             url: 'http://83.212.105.54:8080/event/delete/' + personToDelete.uuid
-            //data: personToDelete.uuid
         }).then(function (success1) {
             console.log(Core.guestList);
             Core.guestList.splice(index, 1);
@@ -71,9 +70,8 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     $scope.deleteEvent =function () {
 
         $http({
-            method: 'DELETE',
+            method: 'GET',
             url: 'http://83.212.105.54:8080/event/cancelEvent/' + $scope.invitation.data.uuid
-            //data: $scope.invitation.data.uuid
         }).then(function (success2) {
             console.log('UUID deleted' + success2);
             $window.location = '#/initialPage';
@@ -139,8 +137,25 @@ organizerControllers.controller('InitialEvent', ['$scope', '$window', function (
     };
 
     $scope.goEdit = function() {
-        console.log($scope.event);
-        $window.location = '#/invite';
+        $scope.showPrompt = function(ev) {
+            var confirm = $mdDialog.prompt()
+                .title('What is your id?')
+                .textContent('Type your id here.')
+                .placeholder('uuid')
+                .ariaLabel('uuid')
+                .targetEvent(ev)
+                .ok('Okay!')
+                .cancel('I cant remember my uuid');
+            $mdDialog.show(confirm).then(function(result) {
+                $http({
+                    
+                });
+                $scope.status = 'You decided to name your dog ' + result + '.';
+            }, function() {
+                $scope.status = 'You will not get married.';
+            });
+        };
+        //$window.location = '#/invite';
     };
 }]);
 
