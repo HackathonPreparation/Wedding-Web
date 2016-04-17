@@ -129,36 +129,40 @@ organizerControllers.controller('WeddingCreation', ['$scope', '$http', '$mdDialo
     };
 }]);
 
-organizerControllers.controller('InitialEvent', ['$scope', '$window', function ($scope, $window) {
+organizerControllers.controller('InitialEvent', ['$scope', '$window', '$mdDialog', '$http', function ($scope, $window, $mdDialog, $http) {
 
     $scope.goCreate = function() {
         console.log($scope.event);
         $window.location = '#/createWedding';
     };
 
-    $scope.goEdit = function() {
-        $scope.showPrompt = function(ev) {
-            var confirm = $mdDialog.prompt()
-                .title('What is your id?')
-                .textContent('Type your id here.')
-                .placeholder('uuid')
-                .ariaLabel('uuid')
-                .targetEvent(ev)
-                .ok('Okay!')
-                .cancel('I cant remember my uuid');
-            $mdDialog.show(confirm).then(function(result) {
-                $http({
-                    
-                });
-                $scope.status = 'You decided to name your dog ' + result + '.';
-            }, function() {
-                $scope.status = 'You will not get married.';
-            });
-        };
-        //$window.location = '#/invite';
-    };
-}]);
 
+    $scope.showPrompt = function(ev) {
+        var confirm = $mdDialog.prompt()
+            .title('What is your id?')
+            .textContent('Type your id here.')
+            .placeholder('uuid')
+            .ariaLabel('uuid')
+            .targetEvent(ev)
+            .ok('Okay!')
+            .cancel('I cant remember my uuid');
+        $mdDialog.show(confirm).then(function(result) {
+            console.log("hi");
+            $http({
+                method: 'GET',
+                url: 'http://83.212.105.54:8080/event/' + result + '/all'
+            }).then(function (success4){
+                $window.location = '#/invite';
+            }, function (fail4) {
+                console.log(fail4);
+            });
+            $scope.status = 'You decided to name your dog ' + result + '.';
+        }, function() {
+            $scope.status = 'You will not get married.';
+        });
+    };
+
+}]);
 
 
 var invitedControllers = angular.module('invitedControllers', ['ngMaterial']);
@@ -169,7 +173,7 @@ invitedControllers.controller('PendingController', ['$scope', '$window', '$mdDia
     $scope.accepted = function () {
         $http({
             method : 'PUT',
-            url : 'http://83.212.105.54:8080/visitor/accept', //not working yet
+            url : 'http://83.212.105.54:8080/visitor/accept', //not working
             headers : {
                 'Content-Type' : 'application/json'
             }/*,
