@@ -3,11 +3,16 @@
         <h1>Invitation Creator</h1>
         <form>
             <label>Give name:</label>
-            <input type="text" name="invitedName" ng-model="invited.name" placeholder="Invited Name" autofocus>
+            <input type="text" name="invitedName" ng-model="invited.name" placeholder="Invited Name" autofocus required>
             <button ng-click="createInvites(invited.name)">+Add</button>
         </form>
         <div ng-repeat="people in guests track by $index">
-            <!--{{people}}-->
+            <button ng-click="deleteSomeone(people, $index)">Delete guest</button>
+            <button ng-click="downloadQR()">Download QR</button>
+            {{people.name}}
+        </div>
+        <div>
+            <button ng-click="deleteEvent()">Delete event</button>
         </div>
     </div>
 </section>
