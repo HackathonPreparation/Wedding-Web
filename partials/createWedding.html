@@ -1,11 +1,15 @@
 <section>
-    <div>
-        <h1>Create your marriage here!</h1>
-        <label>Event's Name:</label>
-        <input type="text" name="name" ng-model="event.name" required><br>
-        <label>Invitation text</label>
-        <input type="text" name="comment" ng-model="event.comment" required><br>
-        <md-button ng-click="createEvent()">Submit</md-button>
-        <br><br>
+    <div class="container">
+        <div class="jumbotron">
+            <div>
+                <h1>Create your marriage here!</h1>
+                <label>Event's Name:</label>
+                <input type="text" name="name" ng-model="event.name" required><br>
+                <label>Invitation text</label>
+                <input type="text" name="comment" ng-model="event.comment" required><br>
+                    <div class="mdbutton"><md-button ng-click="createEvent()">Submit</md-button></div>
+                <br><br>
+            </div>
+        </div>
     </div>
 </section>
