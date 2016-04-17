@@ -9,7 +9,8 @@ var weddingApp = angular.module('weddingApp', [
 
 weddingApp.factory('Core', function(){
     return {
-        guestList : []
+        guestList : {},
+        invitation : {}
         }
     }
 );
