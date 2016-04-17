@@ -41,7 +41,7 @@ organizerControllers.controller('InvitationController', [ '$scope', '$http', 'Co
     };
     
     $scope.downloadQR = function (person) {
-        window.open('http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid, 'Download');
+        window.open('http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid + '.png');
       // $http({
       //     method: 'GET',
       //     url: 'http://83.212.105.54:8080/image/' + $scope.invitation.data.uuid + '/' + person.uuid
